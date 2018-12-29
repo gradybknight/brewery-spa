@@ -22,6 +22,13 @@ export function getAllBeers() {
           type: types.GET_UNIQUE_BREWERIES,
           payload: uniqueBreweries
         });
+        const uniqueStyles = beersTransformations.makeDictionaryOfKeyWords(
+          payload
+        );
+        dispatch({
+          type: types.GET_UNIQUE_STYLES,
+          payload: uniqueStyles
+        });
         dispatch(getAllBeersSuccess(payload));
       })
       .catch(error => {

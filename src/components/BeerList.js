@@ -9,7 +9,6 @@ const BeerList = props => {
   }
   return (
     <div>
-      <h1>All the beers you could imagine</h1>
       {beers.map((beer, index) => {
         return <BeerCard key={index} beer={beer} />;
       })}

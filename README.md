@@ -1,68 +1,25 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Problem Description
 
-## Available Scripts
+Create a simple full-stack application using React for the client-side code and Node.js for a simple backend server. Given a JSON data set, populate a database of your choice. Using that dataset, create an application that allows users to browse a beer database and also display a ‘draft menu’.
 
-In the project directory, you can run:
+One page of the app should be a draft menu (think like a beer menu at a bar) that a user could use to display their currently tapped beers. Another page of the app should be a simple browser for the database, which also allows the user to add beers to the draft menu or remove them. The data should be organized in a logical way, and provide some means of searching or sorting.
 
-### `npm start`
+## Solution Approach
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The webpage is deployed as a single page app residing in an AWS S3 bucket. The database sits within an AWS VPC accessed through an EC2 instance.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+As a general approach, the spa/backend combination is designed to push data and processing burden to the client side. This is to allow the server to run in the least expensive AWS EC2 and RDS tiers. Additionally, server calls by the front end are kept to a minimum. Data parsing and manipulation for user interface is done using standard ES6 functions.
 
-### `npm test`
+My understanding is that this is meant to be a demonstration of my coding. To that end, imports of external packages is kept to a minimum. For example, rather than importing a type-ahead style selector for breweries, this component was created from scratch.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Frontend**
 
-### `npm run build`
+The SPA is a react/redux application. Server calls are done using the [redux-thunk middleware](https://www.npmjs.com/package/redux-thunk).
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The data in the starter file is not "cleaned." For example, abv is not consistently stored with a % character, ibu values are inconsistent and often missing. I assume this was to see how unclean data was handled. Additionally, I assume this represents current state for the production system. Rather than cleaning the data before storing, I assumed this couldn't be done in real life. As such, the data cleaning occurs in the frontend upon initial data retrieval.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+**Backend**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The server side of application resides in an Amazon Web Service Virtual Private Cloud (AWS VPC).
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Rather than spinning-up an additional VPC/EC2/RDS environment, the server code to support this assignment was added to the environment I use to run Pinetop Distillery. The github repo for this server can be found at [AmazonEC2ServerTest](https://github.com/gradybknight/AmazonEC2ServerTest). Relevant routes begin at line 84 of server.js. This imports from ./database/bruvueOperations.js (where relavent sql calls reside).
