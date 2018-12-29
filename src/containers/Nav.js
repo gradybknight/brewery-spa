@@ -7,7 +7,7 @@ import * as actionCreators from "../actions/beersActions";
 
 export class Nav extends Component {
   componentDidMount() {
-    this.props.actions.getAllBeers();
+    // this.props.actions.getAllBeers();
   }
 
   render() {

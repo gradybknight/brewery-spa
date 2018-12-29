@@ -6,7 +6,10 @@ import configureStore from "./store/configureStore";
 import { Provider } from "react-redux";
 import Routes from "./Routes";
 
+import { getAllBeers } from "./actions/beersActions";
+
 const store = configureStore();
+store.dispatch(getAllBeers());
 
 ReactDOM.render(
   <Provider store={store}>

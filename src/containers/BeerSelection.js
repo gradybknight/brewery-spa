@@ -6,6 +6,13 @@ import * as actionCreators from "../actions/beersActions";
 import BeersList from "../components/BeerList";
 
 export class BeerSelection extends Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state  = {
+  //     selectedBreweries:
+  //   }
+  // }
+
   render() {
     return <BeersList beers={this.props.beers} />;
   }
