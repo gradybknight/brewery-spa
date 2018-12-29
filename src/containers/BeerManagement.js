@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as actionCreators from "../actions/beersActions";
-import BeersList from "../components/BeerList";
 
 export class BeerManagement extends Component {
   render() {
@@ -20,6 +19,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch) };
 }
+
+BeerManagement.propTypes = {
+  beers: PropTypes.array
+};
 
 export default connect(
   mapStateToProps,

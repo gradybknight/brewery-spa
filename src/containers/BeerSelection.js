@@ -21,6 +21,10 @@ function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch) };
 }
 
+BeerSelection.propTypes = {
+  beers: PropTypes.array
+};
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

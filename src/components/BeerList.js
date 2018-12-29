@@ -17,6 +17,8 @@ const BeerList = props => {
   );
 };
 
-BeerList.propTypes = {};
+BeerList.propTypes = {
+  beers: PropTypes.array
+};
 
 export default BeerList;

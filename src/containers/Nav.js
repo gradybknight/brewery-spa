@@ -6,10 +6,6 @@ import { connect } from "react-redux";
 import * as actionCreators from "../actions/beersActions";
 
 export class Nav extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.props.actions.getAllBeers();
   }
@@ -42,6 +38,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch) };
 }
+
+Nav.propTypes = {
+  user: PropTypes.object
+};
 
 export default connect(
   mapStateToProps,
