@@ -5,9 +5,13 @@ import { connect } from "react-redux";
 import * as actionCreators from "../actions/beersActions";
 import BeersList from "../components/BeerList";
 import SelectDropdown from "../components/generics/SelectDropdown";
-import { filterByRestrictions } from "../api/beersTransformations";
+import {
+  filterByRestrictions,
+  filterByRestrictionsUnion
+} from "../api/beersTransformations";
 import MessageBox from "../components/generics/MessageBox";
 import RangeSelector from "../components/generics/RangeSelector";
+import SelectionApproach from "../components/SelectionApproach";
 
 export class BeerManagement extends Component {
   constructor(props) {
@@ -21,9 +25,43 @@ export class BeerManagement extends Component {
       ibuLow: 0,
       abvHigh: 12,
       abvLow: 0,
-      showFullList: false
+      showAll: false,
+      unionIsAnd: false
     };
   }
+
+  clickSelectionButton = buttonClicked => {
+    if (buttonClicked === "filter") {
+      this.setState({
+        showAll: false,
+        selectedBeers: []
+      });
+    } else if (buttonClicked === "all") {
+      this.setState({
+        showAll: true,
+        selectedBeers: this.props.beers,
+        restrictions: []
+      });
+    } else if (buttonClicked === "and") {
+      if (!this.state.unionIsAnd) {
+        this.setState({
+          showAll: false,
+          unionIsAnd: true,
+          selectedBeers: [],
+          restrictions: []
+        });
+      }
+    } else if (buttonClicked === "or") {
+      if (this.state.unionIsAnd) {
+        this.setState({
+          showAll: false,
+          unionIsAnd: false,
+          selectedBeers: [],
+          restrictions: []
+        });
+      }
+    }
+  };
 
   formatKeyWordDictionaryForDropdown = () => {
     let keyWords = Object.keys(this.props.beerStyles);
@@ -69,13 +107,28 @@ export class BeerManagement extends Component {
   };
 
   showRestrictedBeers = newRestrictions => {
-    let restrictedBeers = filterByRestrictions(
-      this.props.beers,
-      this.props.beerStyles,
-      newRestrictions
-    );
+    let restrictedBeers = [];
+    if (this.state.unionIsAnd) {
+      restrictedBeers = filterByRestrictionsUnion(
+        this.props.beers,
+        this.props.beerStyles,
+        newRestrictions
+      );
+    } else {
+      restrictedBeers = filterByRestrictions(
+        this.props.beers,
+        this.props.beerStyles,
+        newRestrictions
+      );
+    }
     this.setState({
-      selectedBeers: restrictedBeers
+      selectedBeers: restrictedBeers,
+      dropdownBrewery: "-",
+      dropDownStyles: "-",
+      ibuHigh: 120,
+      ibuLow: 0,
+      abvHigh: 12,
+      abvLow: 0
     });
   };
 
@@ -153,8 +206,12 @@ export class BeerManagement extends Component {
       <>
         <div className="container">
           <div className="row">
-            <div className="beer_selector col-lg-4">
-              <h3>Selection Criteria</h3>
+            <div className="beer_selector col-md-4">
+              <SelectionApproach
+                showAll={this.state.showAll}
+                unionIsAnd={this.state.unionIsAnd}
+                clickSelectionButton={this.clickSelectionButton}
+              />
               <div className="row">
                 <SelectDropdown
                   selections={this.props.breweries}
@@ -214,14 +271,14 @@ export class BeerManagement extends Component {
                   />
                 );
               })}
-              <BeersList beers={this.props.beers} />
+              {/* <BeersList beers={this.props.beers} /> */}
             </div>
-            <div className="selection_results col-lg-4">
-              <h3>Filtered Beers {`(${this.state.selectedBeers.length})`}</h3>
+            <div className="selection_results col-md-4">
+              <h2>Filtered Beers {`(${this.state.selectedBeers.length})`}</h2>
               <BeersList beers={this.state.selectedBeers} />
             </div>
-            <div className="tap_selection col-lg-4">
-              <h3>Tap Management</h3>
+            <div className="tap_selection col-md-4">
+              <h2>Bar Menu</h2>
             </div>
           </div>
         </div>

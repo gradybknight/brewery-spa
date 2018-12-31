@@ -1413,3 +1413,21 @@ nav button {
   font-size: 20px;
   text-align: center;
 }
+
+#selection_button_selected {
+  background-color: #2c06eb;
+  color: white;
+  border-color: #2c06eb;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  text-align: center;
+}
+
+#selection_button {
+  border-color: #2c06eb;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  text-align: center;
+}

@@ -101,10 +101,15 @@ export function filterByRestrictions(beers, keyWordDict, restrictions) {
       restrictedBeers = [...restrictedBeers, ...beersToAdd];
       // add all the beers with a key word
     } else if (restriction.type === `word`) {
-      restrictedBeers = [
-        ...restrictedBeers,
-        ...keyWordDict[restriction.strTarget]
-      ];
+      if (keyWordDict[restriction.strTarget]) {
+        restrictedBeers = [
+          ...restrictedBeers,
+          ...keyWordDict[restriction.strTarget]
+        ];
+      } else {
+        restrictedBeers = [];
+      }
+
       // filter by abv. Must clean abv as dataset is messy
     } else if (restriction.type === `abv`) {
       beers.forEach(beer => {
@@ -126,4 +131,27 @@ export function filterByRestrictions(beers, keyWordDict, restrictions) {
   // remove duplicates from array and return
   // return removeDuplicates(restrictedBeers);
   return restrictedBeers;
+}
+
+export function filterByRestrictionsUnion(beers, keyWordDict, restrictions) {
+  // This builds on the function filterByRestriction. Instead of adding each set of matching beers, the function is called using the array of matched beers from the previous call. It is effectively a recursive approach.
+  let restrictionByUnion = Object.assign([], [...beers]);
+  restrictions.forEach(restriction => {
+    let localRestrictions = [restriction];
+    let dictOfRestrictedBeersKeyWords = makeDictionaryOfKeyWords(
+      restrictionByUnion
+    );
+    if (
+      restrictionByUnion.length === 0 ||
+      dictOfRestrictedBeersKeyWords.length === 0
+    ) {
+      return []; // early return: if the array of beers reaches 0, we hit an empty set and can stop
+    }
+    restrictionByUnion = filterByRestrictions(
+      restrictionByUnion,
+      dictOfRestrictedBeersKeyWords,
+      localRestrictions
+    );
+  });
+  return restrictionByUnion;
 }
