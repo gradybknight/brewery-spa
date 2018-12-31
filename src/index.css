@@ -1392,3 +1392,24 @@ nav button {
 .select__box {
   margin-right: 25px;
 }
+
+#message__box {
+  margin: 5px;
+  border-color: #2ae3f0;
+  background-color: #2ae3f0;
+  border-radius: 15px;
+  color: #2c06eb;
+  font-size: 18px;
+  vertical-align: middle;
+}
+
+.remove__button {
+  width: 30px;
+  height: 30px;
+  background-color: #2c06eb;
+  border-color: #2c06eb;
+  border-radius: 15px;
+  color: white;
+  font-size: 20px;
+  text-align: center;
+}

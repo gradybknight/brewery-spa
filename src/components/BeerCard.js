@@ -5,12 +5,12 @@ const BeerCard = props => {
   let { id, breweryName, beerName, beerStyle, abv, ibu } = props.beer;
   return (
     <div className="beer_card" key={id}>
-      <h2>{breweryName}</h2>
-      <h3>{beerName}</h3>
-      <h4>Description: {beerStyle}</h4>
-      <h4>
-        abv: {abv}, ibu: {ibu}
-      </h4>
+      <h3>
+        {breweryName} {beerName}
+      </h3>
+      <p>
+        Description: {beerStyle} abv: {abv}, ibu: {ibu}
+      </p>
     </div>
   );
 };

@@ -12,10 +12,10 @@ export class Nav extends Component {
 
   render() {
     return (
-      <nav>
+      <nav className="nav">
         <ul>
           <li>
-            <Link to="/">Beer Selection</Link>
+            <Link to="/">Bar Menu</Link>
           </li>
           <li>
             <Link to="/beerManagement">Beer Managment</Link>
