@@ -6,7 +6,7 @@ const SelectDropdown = props => {
   selections = ["-", ...selections];
   return (
     <>
-      <label className="select__label" htmlFor={name}>
+      <label className="row__card__headline" htmlFor={name}>
         {label}
       </label>
       <select

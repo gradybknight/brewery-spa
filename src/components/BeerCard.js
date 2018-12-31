@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 const BeerCard = props => {
   let { id, breweryName, beerName, beerStyle, abv, ibu } = props.beer;
   return (
-    <div className="beer_card" key={id}>
-      <h3>
-        {breweryName} {beerName}
-      </h3>
-      <p>
+    <div className="beer__card" key={id}>
+      <div className="beer__name">{beerName}</div>
+      <div className="brewery__name">{breweryName}</div>
+      <div className="beer__description">
         Description: {beerStyle} abv: {abv}, ibu: {ibu}
-      </p>
+      </div>
+      <div className="choose__beer">&#10003;</div>
     </div>
   );
 };

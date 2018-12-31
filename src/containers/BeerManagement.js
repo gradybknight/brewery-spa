@@ -12,6 +12,7 @@ import {
 import MessageBox from "../components/generics/MessageBox";
 import RangeSelector from "../components/generics/RangeSelector";
 import SelectionApproach from "../components/SelectionApproach";
+import UnionType from "../components/UnionType";
 
 export class BeerManagement extends Component {
   constructor(props) {
@@ -204,82 +205,95 @@ export class BeerManagement extends Component {
     let keyWords = Object.keys(this.props.beerStyles);
     return (
       <>
-        <div className="container">
-          <div className="row">
-            <div className="beer_selector col-md-4">
+        <div className="row">
+          <div className="column" style={{ backgroundColor: "#ccc" }}>
+            <div className="column__headline">Filter the list of beers</div>
+            <div className="row__card">
               <SelectionApproach
                 showAll={this.state.showAll}
                 unionIsAnd={this.state.unionIsAnd}
                 clickSelectionButton={this.clickSelectionButton}
               />
-              <div className="row">
-                <SelectDropdown
-                  selections={this.props.breweries}
-                  onChange={this.breweryDropDownChange}
-                  selected={this.state.dropdownBrewery}
-                  label="Breweries"
-                  name="breweries"
+            </div>
+            <div className="row__card">
+              {this.state.showAll ? (
+                ""
+              ) : (
+                <UnionType
+                  unionIsAnd={this.state.unionIsAnd}
+                  clickSelectionButton={this.clickSelectionButton}
                 />
-              </div>
-              <div className="row">
-                <SelectDropdown
-                  selections={keyWords}
-                  onChange={this.keyWordsDropDownChange}
-                  selected={this.state.dropDownStyles}
-                  label="Key Words"
-                  name="keyWords"
-                />
-              </div>
-              <div className="row">
-                <RangeSelector
-                  title="ABV"
-                  lowLimit={0}
-                  lowName={this.state.abvLow}
-                  highLimit={12}
-                  highName={this.state.abvHigh}
-                  increments={24}
-                  lowValue={this.state.abvLow}
-                  highValue={this.state.abvHigh}
-                  onChangeLow={this.abvLowChange}
-                  onChangeHigh={this.abvHighChange}
-                  selectionConfirmClick={this.abvCheckClicked}
-                />
-              </div>
-              <div className="row">
-                <RangeSelector
-                  title="IBU"
-                  lowLimit={0}
-                  lowName={this.state.ibuLow}
-                  highLimit={120}
-                  highName={this.state.ibuHigh}
-                  increments={24}
-                  lowValue={this.state.ibuLow}
-                  highValue={this.state.ibuHigh}
-                  onChangeLow={this.ibuLowChange}
-                  onChangeHigh={this.ibuHighChange}
-                  selectionConfirmClick={this.ibuCheckClicked}
-                />
-              </div>
-
-              {this.state.restrictions.map((restriction, index) => {
-                return (
+              )}
+            </div>
+            <div className="row__card">
+              <SelectDropdown
+                selections={this.props.breweries}
+                onChange={this.breweryDropDownChange}
+                selected={this.state.dropdownBrewery}
+                label="Breweries"
+                name="breweries"
+              />
+            </div>
+            <div className="row__card">
+              <SelectDropdown
+                selections={keyWords}
+                onChange={this.keyWordsDropDownChange}
+                selected={this.state.dropDownStyles}
+                label="Key Words"
+                name="keyWords"
+              />
+            </div>
+            <div className="row__card">
+              <RangeSelector
+                title="ABV"
+                lowLimit={0}
+                lowName={this.state.abvLow}
+                highLimit={12}
+                highName={this.state.abvHigh}
+                increments={24}
+                lowValue={this.state.abvLow}
+                highValue={this.state.abvHigh}
+                onChangeLow={this.abvLowChange}
+                onChangeHigh={this.abvHighChange}
+                selectionConfirmClick={this.abvCheckClicked}
+              />
+            </div>
+            <div className="row__card">
+              <RangeSelector
+                title="IBU"
+                lowLimit={0}
+                lowName={this.state.ibuLow}
+                highLimit={120}
+                highName={this.state.ibuHigh}
+                increments={24}
+                lowValue={this.state.ibuLow}
+                highValue={this.state.ibuHigh}
+                onChangeLow={this.ibuLowChange}
+                onChangeHigh={this.ibuHighChange}
+                selectionConfirmClick={this.ibuCheckClicked}
+              />
+            </div>
+            {this.state.restrictions.map((restriction, index) => {
+              return (
+                <div key={index} className="row__card">
                   <MessageBox
                     message={restriction.strTarget}
                     clickToRemove={this.removeRestriction}
                     key={index}
                     messageid={index}
                   />
-                );
-              })}
-              {/* <BeersList beers={this.props.beers} /> */}
+                </div>
+              );
+            })}
+          </div>
+          <div className="column" style={{ backgroundColor: "#aaa" }}>
+            <div className="column__headline">
+              Results ({this.state.selectedBeers.length})
             </div>
-            <div className="selection_results col-md-4">
-              <h2>Filtered Beers {`(${this.state.selectedBeers.length})`}</h2>
-              <BeersList beers={this.state.selectedBeers} />
-            </div>
-            <div className="tap_selection col-md-4">
-              <h2>Bar Menu</h2>
-            </div>
+            <BeersList beers={this.state.selectedBeers} />
+          </div>
+          <div className="column" style={{ backgroundColor: "#ccc" }}>
+            <div className="column__headline">Bar Menu</div>
           </div>
         </div>
       </>

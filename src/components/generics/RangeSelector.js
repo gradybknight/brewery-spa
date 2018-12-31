@@ -23,45 +23,39 @@ const RangeSelector = props => {
 
   return (
     <>
-      <div className="row">
-        <h3>{title}</h3>
-      </div>
-      <div className="row">
-        <div className="col-md-5">
-          <label className="select__label">Low:</label>
-          <select
-            value={lowValue}
-            onChange={onChangeLow}
-            id={lowName}
-            className="select__box"
-          >
-            {selections.map((selection, index) => {
-              return (
-                <option key={index + 9} value={selection}>
-                  {selection}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-        <div className="col-md-5">
-          <label className="select__label">High:</label>
-          <select
-            value={highValue}
-            onChange={onChangeHigh}
-            id={highName}
-            className="select__box"
-          >
-            {selections.map((selection, index) => {
-              return (
-                <option key={index} value={selection}>
-                  {selection}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-        <div className="check__mark col-md-2" onClick={selectionConfirmClick}>
+      <div className="row__card__headline">{title}</div>
+      <div>
+        <label className="select__label">Low:</label>
+        <select
+          value={lowValue}
+          onChange={onChangeLow}
+          id={lowName}
+          className="select__box"
+        >
+          {selections.map((selection, index) => {
+            return (
+              <option key={index + 9} value={selection}>
+                {selection}
+              </option>
+            );
+          })}
+        </select>
+        <label className="select__label">High:</label>
+        <select
+          value={highValue}
+          onChange={onChangeHigh}
+          id={highName}
+          className="select__box"
+        >
+          {selections.map((selection, index) => {
+            return (
+              <option key={index} value={selection}>
+                {selection}
+              </option>
+            );
+          })}
+        </select>
+        <div className="check__mark" onClick={selectionConfirmClick}>
           &#10003;
         </div>
       </div>

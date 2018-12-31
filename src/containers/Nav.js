@@ -20,9 +20,6 @@ export class Nav extends Component {
           <li>
             <Link to="/beerManagement">Beer Managment</Link>
           </li>
-          <li>
-            <Link to="/tapManagement">Tap Managment</Link>
-          </li>
         </ul>
       </nav>
     );
