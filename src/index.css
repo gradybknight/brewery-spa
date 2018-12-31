@@ -96,6 +96,7 @@ nav li a:active {
   float: left;
   width: 33.33%;
   height: 3000px;
+  margin-bottom: 25px;
 }
 
 /* Clear floats after the columns */
@@ -109,6 +110,7 @@ nav li a:active {
   position: fixed;
   top: 65px;
   width: 98%;
+  overflow: scroll;
 }
 
 .column__headline {
@@ -164,7 +166,7 @@ nav li a:active {
 
 .choose__beer {
   position: relative;
-  top: 10px;
+  top: -45px;
   float: right;
   height: 45px;
   width: 45px;

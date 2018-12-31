@@ -27,7 +27,8 @@ export class BeerManagement extends Component {
       abvHigh: 12,
       abvLow: 0,
       showAll: false,
-      unionIsAnd: false
+      unionIsAnd: false,
+      proposedBarMenu: []
     };
   }
 
@@ -201,6 +202,10 @@ export class BeerManagement extends Component {
     this.showRestrictedBeers(restrictions);
   };
 
+  beerCardCheckmarkClicked = clickMeaning => {
+    console.log(clickMeaning);
+  };
+
   render() {
     let keyWords = Object.keys(this.props.beerStyles);
     return (
@@ -226,52 +231,68 @@ export class BeerManagement extends Component {
               )}
             </div>
             <div className="row__card">
-              <SelectDropdown
-                selections={this.props.breweries}
-                onChange={this.breweryDropDownChange}
-                selected={this.state.dropdownBrewery}
-                label="Breweries"
-                name="breweries"
-              />
+              {this.state.showAll ? (
+                ""
+              ) : (
+                <SelectDropdown
+                  selections={this.props.breweries}
+                  onChange={this.breweryDropDownChange}
+                  selected={this.state.dropdownBrewery}
+                  label="Breweries"
+                  name="breweries"
+                />
+              )}
             </div>
             <div className="row__card">
-              <SelectDropdown
-                selections={keyWords}
-                onChange={this.keyWordsDropDownChange}
-                selected={this.state.dropDownStyles}
-                label="Key Words"
-                name="keyWords"
-              />
+              {this.state.showAll ? (
+                ""
+              ) : (
+                <SelectDropdown
+                  selections={keyWords}
+                  onChange={this.keyWordsDropDownChange}
+                  selected={this.state.dropDownStyles}
+                  label="Key Words"
+                  name="keyWords"
+                />
+              )}
             </div>
             <div className="row__card">
-              <RangeSelector
-                title="ABV"
-                lowLimit={0}
-                lowName={this.state.abvLow}
-                highLimit={12}
-                highName={this.state.abvHigh}
-                increments={24}
-                lowValue={this.state.abvLow}
-                highValue={this.state.abvHigh}
-                onChangeLow={this.abvLowChange}
-                onChangeHigh={this.abvHighChange}
-                selectionConfirmClick={this.abvCheckClicked}
-              />
+              {this.state.showAll ? (
+                ""
+              ) : (
+                <RangeSelector
+                  title="ABV"
+                  lowLimit={0}
+                  lowName={this.state.abvLow}
+                  highLimit={12}
+                  highName={this.state.abvHigh}
+                  increments={24}
+                  lowValue={this.state.abvLow}
+                  highValue={this.state.abvHigh}
+                  onChangeLow={this.abvLowChange}
+                  onChangeHigh={this.abvHighChange}
+                  selectionConfirmClick={this.abvCheckClicked}
+                />
+              )}
             </div>
             <div className="row__card">
-              <RangeSelector
-                title="IBU"
-                lowLimit={0}
-                lowName={this.state.ibuLow}
-                highLimit={120}
-                highName={this.state.ibuHigh}
-                increments={24}
-                lowValue={this.state.ibuLow}
-                highValue={this.state.ibuHigh}
-                onChangeLow={this.ibuLowChange}
-                onChangeHigh={this.ibuHighChange}
-                selectionConfirmClick={this.ibuCheckClicked}
-              />
+              {this.state.showAll ? (
+                ""
+              ) : (
+                <RangeSelector
+                  title="IBU"
+                  lowLimit={0}
+                  lowName={this.state.ibuLow}
+                  highLimit={120}
+                  highName={this.state.ibuHigh}
+                  increments={24}
+                  lowValue={this.state.ibuLow}
+                  highValue={this.state.ibuHigh}
+                  onChangeLow={this.ibuLowChange}
+                  onChangeHigh={this.ibuHighChange}
+                  selectionConfirmClick={this.ibuCheckClicked}
+                />
+              )}
             </div>
             {this.state.restrictions.map((restriction, index) => {
               return (
@@ -286,13 +307,17 @@ export class BeerManagement extends Component {
               );
             })}
           </div>
-          <div className="column" style={{ backgroundColor: "#aaa" }}>
+          <div className="column" style={{ backgroundColor: "#bbb" }}>
             <div className="column__headline">
               Results ({this.state.selectedBeers.length})
             </div>
-            <BeersList beers={this.state.selectedBeers} />
+            <BeersList
+              beers={this.state.selectedBeers}
+              listLocation={"results"}
+              beerCardCheckmarkClicked={this.beerCardCheckmarkClicked}
+            />
           </div>
-          <div className="column" style={{ backgroundColor: "#ccc" }}>
+          <div className="column" style={{ backgroundColor: "#aaa" }}>
             <div className="column__headline">Bar Menu</div>
           </div>
         </div>

@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 
 const BeerCard = props => {
   let { id, breweryName, beerName, beerStyle, abv, ibu } = props.beer;
+  let { listLocation, beerCardCheckmarkClicked } = props;
+  let showButton = true;
+  showButton = listLocation === "results" || listLocation === "menuManagement";
   return (
     <div className="beer__card" key={id}>
       <div className="beer__name">{beerName}</div>
@@ -10,7 +13,29 @@ const BeerCard = props => {
       <div className="beer__description">
         Description: {beerStyle} abv: {abv}, ibu: {ibu}
       </div>
-      <div className="choose__beer">&#10003;</div>
+      {showButton ? (
+        listLocation === "results" ? (
+          <div
+            className="choose__beer"
+            onClick={() => {
+              beerCardCheckmarkClicked("add");
+            }}
+          >
+            &#10003;
+          </div>
+        ) : (
+          <div
+            className="choose__beer"
+            onClick={() => {
+              beerCardCheckmarkClicked("remove");
+            }}
+          >
+            x
+          </div>
+        )
+      ) : (
+        ""
+      )}
     </div>
   );
 };
