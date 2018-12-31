@@ -61,6 +61,9 @@ export function makeDictionaryOfKeyWords(beers) {
 
 export function cleanABV(abv) {
   let cleanedABV = abv.split(`%`);
+  if (abv === "n/a") {
+    cleanedABV = 0;
+  }
   return cleanedABV[0] / 1; // cast to number
 }
 

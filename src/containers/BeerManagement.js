@@ -7,7 +7,7 @@ import BeersList from "../components/BeerList";
 import SelectDropdown from "../components/generics/SelectDropdown";
 import { filterByRestrictions } from "../api/beersTransformations";
 import MessageBox from "../components/generics/MessageBox";
-import NumericRangeSelector from "../components/generics/NumericRangeSelector";
+import RangeSelector from "../components/generics/RangeSelector";
 
 export class BeerManagement extends Component {
   constructor(props) {
@@ -17,10 +17,10 @@ export class BeerManagement extends Component {
       dropDownStyles: "-",
       selectedBeers: [],
       restrictions: [],
-      ibuHigh: "n/a",
-      ibuLow: "n/a",
-      abvHigh: "n/a",
-      abvLow: "n/a",
+      ibuHigh: 120,
+      ibuLow: 0,
+      abvHigh: 12,
+      abvLow: 0,
       showFullList: false
     };
   }
@@ -91,6 +91,62 @@ export class BeerManagement extends Component {
     });
   };
 
+  abvLowChange = event => {
+    this.setState({
+      abvLow: event.target.value / 1
+    });
+  };
+
+  abvHighChange = event => {
+    this.setState({
+      abvHigh: event.target.value / 1
+    });
+  };
+
+  abvCheckClicked = () => {
+    let restriction = {
+      type: `abv`,
+      rangeLow: this.state.abvLow,
+      rangeHigh: this.state.abvHigh,
+      strTarget: `ABV: ${this.state.abvLow} - ${this.state.abvHigh}`
+    };
+    let restrictions = [...this.state.restrictions, restriction];
+    this.setState({
+      restrictions: [...this.state.restrictions, restriction],
+      abvLow: "0",
+      abvHigh: "12"
+    });
+    this.showRestrictedBeers(restrictions);
+  };
+
+  ibuLowChange = event => {
+    this.setState({
+      ibuLow: event.target.value / 1
+    });
+  };
+
+  ibuHighChange = event => {
+    this.setState({
+      ibuHigh: event.target.value / 1
+    });
+  };
+
+  ibuCheckClicked = () => {
+    let restriction = {
+      type: `ibu`,
+      rangeLow: this.state.ibuLow,
+      rangeHigh: this.state.ibuHigh,
+      strTarget: `ibu: ${this.state.ibuLow} - ${this.state.ibuHigh}`
+    };
+    let restrictions = [...this.state.restrictions, restriction];
+    this.setState({
+      restrictions: [...this.state.restrictions, restriction],
+      ibuLow: "0",
+      ibuHigh: "120"
+    });
+    this.showRestrictedBeers(restrictions);
+  };
+
   render() {
     let keyWords = Object.keys(this.props.beerStyles);
     return (
@@ -118,19 +174,33 @@ export class BeerManagement extends Component {
                 />
               </div>
               <div className="row">
-                <NumericRangeSelector
+                <RangeSelector
                   title="ABV"
+                  lowLimit={0}
+                  lowName={this.state.abvLow}
+                  highLimit={12}
+                  highName={this.state.abvHigh}
+                  increments={24}
                   lowValue={this.state.abvLow}
                   highValue={this.state.abvHigh}
-                  onChange={null}
+                  onChangeLow={this.abvLowChange}
+                  onChangeHigh={this.abvHighChange}
+                  selectionConfirmClick={this.abvCheckClicked}
                 />
               </div>
               <div className="row">
-                <NumericRangeSelector
+                <RangeSelector
                   title="IBU"
+                  lowLimit={0}
+                  lowName={this.state.ibuLow}
+                  highLimit={120}
+                  highName={this.state.ibuHigh}
+                  increments={24}
                   lowValue={this.state.ibuLow}
                   highValue={this.state.ibuHigh}
-                  onChange={null}
+                  onChangeLow={this.ibuLowChange}
+                  onChangeHigh={this.ibuHighChange}
+                  selectionConfirmClick={this.ibuCheckClicked}
                 />
               </div>
 
