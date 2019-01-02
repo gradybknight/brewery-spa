@@ -232,7 +232,7 @@ export class BeerManagement extends Component {
     return (
       <>
         <div className="row">
-          <div className="column" style={{ backgroundColor: "#ccc" }}>
+          <div className="column" style={{ backgroundColor: "#D3D3D3" }}>
             <div className="column__headline">Filter the list of beers</div>
             <div className="row__card">
               <SelectionApproach
@@ -338,7 +338,7 @@ export class BeerManagement extends Component {
               beerCardCheckmarkClicked={this.beerCardCheckmarkClicked}
             />
           </div>
-          <div className="column" style={{ backgroundColor: "#aaa" }}>
+          <div className="column" style={{ backgroundColor: "#D3D3D3" }}>
             <div className="column__headline">Bar Menu</div>
             {this.props.menu.length > 0 ? (
               <BeersList
