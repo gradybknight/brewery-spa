@@ -24,7 +24,7 @@ Create a simple full-stack application using React for the client-side code and 
 
 One page of the app should be a draft menu (think like a beer menu at a bar) that a user could use to display their currently tapped beers. Another page of the app should be a simple browser for the database, which also allows the user to add beers to the draft menu or remove them. The data should be organized in a logical way, and provide some means of searching or sorting.
 
-## Solution Approach
+# Solution Approach
 
 The webpage is deployed as a single page app residing in an AWS S3 bucket. The database sits within an AWS VPC accessed through an EC2 instance.
 
@@ -41,6 +41,8 @@ The data in the starter file is not "cleaned." For example, abv is not consisten
 While there is cleaning performed on the frontend to make IBU and ABV range selection work, I did not spend time cleaning descriptions.
 
 To speed key word searching, upon initial retrieval of the beers list, each beer's description is parsed to create a dictionary of keywords. The key word acts as the key and an array of all beers' containing the key word is the property. By doing this, selecting for a key word will yield all the associated beers in O(1).
+
+I realize the container BeerManagement is painfully long. The bulk of the logic which handles the AND/OR selections as well as the behavior of clicking the action button for a beer all reside in this container. Stripping the logic and formatting from this component, there are only 10 components included which describe the UI for the container. I realize long coded components is generally an anti-pattern. In this case, I found it useful to have the entirity of the display on logic in one encapsulation.
 
 **Backend**
 
