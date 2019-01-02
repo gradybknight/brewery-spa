@@ -27,8 +27,7 @@ export class BeerManagement extends Component {
       abvHigh: 12,
       abvLow: 0,
       showAll: false,
-      unionIsAnd: false,
-      proposedBarMenu: []
+      unionIsAnd: false
     };
   }
 
@@ -202,8 +201,30 @@ export class BeerManagement extends Component {
     this.showRestrictedBeers(restrictions);
   };
 
-  beerCardCheckmarkClicked = clickMeaning => {
-    console.log(clickMeaning);
+  removeBeerFromSelectedBeers = beerID => {
+    if (this.props.menu.length === 1) {
+      alert(`you can't remove the last beer.  what kind of a bar is this?`);
+    } else {
+      let newMenu = this.props.menu.filter(beer => beer.id !== beerID);
+      let newMenuIDs = newMenu.map(beer => beer.id);
+      let strMenuIDs = newMenuIDs.join("|");
+      this.props.actions.updateMenu(strMenuIDs, this.props.beers);
+    }
+  };
+
+  addBeerToMenu = beerID => {
+    let newMenuIDs = this.props.menu.map(beer => beer.id);
+    newMenuIDs = [...newMenuIDs, beerID];
+    let strMenuIDs = newMenuIDs.join("|");
+    this.props.actions.updateMenu(strMenuIDs, this.props.beers);
+  };
+
+  beerCardCheckmarkClicked = (clickMeaning, beerID) => {
+    if (clickMeaning === "removeFromMenu") {
+      this.removeBeerFromSelectedBeers(beerID);
+    } else if (clickMeaning === "addToBarMenu") {
+      this.addBeerToMenu(beerID);
+    }
   };
 
   render() {
@@ -319,6 +340,15 @@ export class BeerManagement extends Component {
           </div>
           <div className="column" style={{ backgroundColor: "#aaa" }}>
             <div className="column__headline">Bar Menu</div>
+            {this.props.menu.length > 0 ? (
+              <BeersList
+                beers={this.props.menu}
+                listLocation={"menuManagement"}
+                beerCardCheckmarkClicked={this.beerCardCheckmarkClicked}
+              />
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </>

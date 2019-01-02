@@ -7,7 +7,16 @@ import * as actionCreators from "../actions/beersActions";
 
 export class Nav extends Component {
   componentDidMount() {
-    // this.props.actions.getAllBeers();
+    if (this.props.beers.length > 0) {
+      this.props.actions.getMenu(this.props.beers);
+    } else {
+      let waitingForBeerList = setInterval(() => {
+        if (this.props.beers.length > 0) {
+          clearInterval(waitingForBeerList);
+          this.props.actions.getMenu(this.props.beers);
+        }
+      }, 50);
+    }
   }
 
   render() {
@@ -28,7 +37,7 @@ export class Nav extends Component {
 
 function mapStateToProps(state) {
   return {
-    ...state.beers
+    ...state
   };
 }
 

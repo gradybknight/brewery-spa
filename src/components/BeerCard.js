@@ -18,7 +18,7 @@ const BeerCard = props => {
           <div
             className="choose__beer"
             onClick={() => {
-              beerCardCheckmarkClicked("add");
+              beerCardCheckmarkClicked("addToBarMenu", id);
             }}
           >
             &#10003;
@@ -27,7 +27,7 @@ const BeerCard = props => {
           <div
             className="choose__beer"
             onClick={() => {
-              beerCardCheckmarkClicked("remove");
+              beerCardCheckmarkClicked("removeFromMenu", id);
             }}
           >
             x
@@ -45,3 +45,5 @@ BeerCard.propTypes = {
 };
 
 export default BeerCard;
+
+//
